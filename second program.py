@@ -159,5 +159,11 @@ def delete_patient():
     else:
         messagebox.showerror("Error", "Patient not found.")
 
+root = tk.Tk()
+root.title("Hospital Patient Management")
+
+input_frame = tk.Frame(root)
+input_frame.pack(pady=20)
+
 
 

@@ -166,4 +166,34 @@ input_frame = tk.Frame(root)
 input_frame.pack(pady=20)
 
 
+tk.Label(input_frame, text="Full Name:").grid(row=0, column=0, pady=5, padx=5)
+full_name_entry = tk.Entry(input_frame)
+full_name_entry.grid(row=0, column=1, pady=5, padx=5)
+
+tk.Label(input_frame, text="Severity Score (1-10):").grid(row=1, column=0, pady=5, padx=5)
+severity_score_entry = tk.Entry(input_frame)
+severity_score_entry.grid(row=1, column=1, pady=5, padx=5)
+
+tk.Label(input_frame, text="Logical Expression (e.g., 'True and False'):").grid(row=2, column=0, pady=5, padx=5)
+logical_expression_entry = tk.Entry(input_frame)
+logical_expression_entry.grid(row=2, column=1, pady=5, padx=5)
+
+tk.Label(input_frame, text="Age:").grid(row=3, column=0, pady=5, padx=5)
+age_entry = tk.Entry(input_frame)
+age_entry.grid(row=3, column=1, pady=5, padx=5)
+
+tk.Label(input_frame, text="Height (in cm):").grid(row=4, column=0, pady=5, padx=5)
+height_entry = tk.Entry(input_frame)
+height_entry.grid(row=4, column=1, pady=5, padx=5)
+
+tk.Label(input_frame, text="Gender (M/F):").grid(row=5, column=0, pady=5, padx=5)
+gender_entry = tk.Entry(input_frame)
+gender_entry.grid(row=5, column=1, pady=5, padx=5)
+
+tk.Label(input_frame, text="Reason for Visit:").grid(row=6, column=0, pady=5, padx=5)
+reason_entry = tk.Entry(input_frame)
+reason_entry.grid(row=6, column=1, pady=5, padx=5)
+
+
+
 

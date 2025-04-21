@@ -21,7 +21,7 @@ class Patient:
             return eval(self.logical_expression)
         except Exception as e:
             print(f"Error evaluating logical expression: {e}")
-            return False  # Default to False if there's an error
+            return False  
     
     def __repr__(self):
         return f"Patient(full_name={self.full_name}, severity_score={self.severity_score}, logical_expression={self.logical_expression})"
@@ -29,9 +29,9 @@ class Patient:
     def to_list(self):
         return [self.full_name, self.severity_score, self.logical_expression, self.age, self.height, self.gender, self.reason]
     
-    # Function to show the patients in a table format using Treeview
+    
 def show_patients():
-    # Clear the existing rows in the table
+   
     for row in treeview.get_children():
         treeview.delete(row)
     
@@ -39,6 +39,64 @@ def show_patients():
         messagebox.showinfo("No Patients", "No patients to show.")
     else:
         for patient in patients:
-            # Add each patient as a new row in the Treeview
+           
             treeview.insert('', 'end', values=(patient.full_name, patient.severity_score, patient.age, patient.height, patient.gender, patient.reason))
+
+
+def add_patient():
+
+    if not full_name_entry.get() or not severity_score_entry.get() or not logical_expression_entry.get() or not age_entry.get() or not height_entry.get() or not gender_entry.get() or not reason_entry.get():
+        messagebox.showerror("Input Error", "All fields must be filled!")
+        return
+
+    full_name = full_name_entry.get()
+    
+    if len(full_name) > 60:
+        messagebox.showerror("Invalid Input", "Full Name must not be more than 60 characters.")
+        return
+    
+    try:
+        severity_score = float(severity_score_entry.get())
+        if not (1 <= severity_score <= 10):
+            messagebox.showerror("Invalid Input", "Severity score must be between 1 and 10.")
+            return
+    except ValueError:
+        messagebox.showerror("Invalid Input", "Severity score must be a number.")
+        return
+
+    logical_expression = logical_expression_entry.get()
+    
+   
+    try:
+        age = int(age_entry.get())
+    except ValueError:
+        messagebox.showerror("Invalid Input", "Age must be an integer.")
+        return
+    
+    try:
+        height = int(height_entry.get())
+    except ValueError:
+        messagebox.showerror("Invalid Input", "Height must be an integer.")
+        return
+    
+    gender = gender_entry.get().upper()
+    if gender not in ['M', 'F']:
+        messagebox.showerror("Invalid Input", "Gender must be 'M' or 'F' (capital letters only).")
+        return
+
+    reason = reason_entry.get()
+
+    new_patient = Patient(full_name, severity_score, logical_expression, age, height, gender, reason)
+    patients.append(new_patient)
+
+    full_name_entry.delete(0, tk.END)
+    severity_score_entry.delete(0, tk.END)
+    logical_expression_entry.delete(0, tk.END)
+    age_entry.delete(0, tk.END)
+    height_entry.delete(0, tk.END)
+    gender_entry.delete(0, tk.END)
+    reason_entry.delete(0, tk.END)
+
+    messagebox.showinfo("Patient Added", f"Patient {full_name} has been added successfully.")
+
 

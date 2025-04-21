@@ -129,6 +129,35 @@ def load_patients():
             show_patients()  
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred while loading data: {e}")
+            
+
+def delete_patient():
+    selected_item = treeview.selection()
+    
+    if not selected_item:
+        messagebox.showerror("No Selection", "Please select a patient to delete.")
+        return
+    
+   
+    selected_patient_name = treeview.item(selected_item)["values"][0]
+    
+  
+    patient_to_delete = None
+    for patient in patients:
+        if patient.full_name == selected_patient_name:
+            patient_to_delete = patient
+            break
+    
+    if patient_to_delete:
+        
+        patients.remove(patient_to_delete)
+        treeview.delete(selected_item)
+      
+        save_patients()
+        
+        messagebox.showinfo("Patient Deleted", f"Patient {selected_patient_name} has been deleted successfully.")
+    else:
+        messagebox.showerror("Error", "Patient not found.")
 
 
 

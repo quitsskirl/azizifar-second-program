@@ -13,9 +13,9 @@ class Patient:
         self.height = height
         self.gender = gender
         self.reason = reason
-
+    
     def evaluate_logical_expression(self):
-     
+       
         self.logical_expression = self.logical_expression.replace('true', 'True').replace('false', 'False')
         try:
             return eval(self.logical_expression)
@@ -26,12 +26,15 @@ class Patient:
     def __repr__(self):
         return f"Patient(full_name={self.full_name}, severity_score={self.severity_score}, logical_expression={self.logical_expression})"
 
+    
     def to_list(self):
         return [self.full_name, self.severity_score, self.logical_expression, self.age, self.height, self.gender, self.reason]
-    
-    
+
+patients = []
+
+
 def show_patients():
-   
+  
     for row in treeview.get_children():
         treeview.delete(row)
     
@@ -39,21 +42,22 @@ def show_patients():
         messagebox.showinfo("No Patients", "No patients to show.")
     else:
         for patient in patients:
-           
+            
             treeview.insert('', 'end', values=(patient.full_name, patient.severity_score, patient.age, patient.height, patient.gender, patient.reason))
 
 
 def add_patient():
-
+    
     if not full_name_entry.get() or not severity_score_entry.get() or not logical_expression_entry.get() or not age_entry.get() or not height_entry.get() or not gender_entry.get() or not reason_entry.get():
         messagebox.showerror("Input Error", "All fields must be filled!")
         return
 
     full_name = full_name_entry.get()
-    
+ 
     if len(full_name) > 60:
         messagebox.showerror("Invalid Input", "Full Name must not be more than 60 characters.")
         return
+    
     
     try:
         severity_score = float(severity_score_entry.get())
@@ -66,18 +70,19 @@ def add_patient():
 
     logical_expression = logical_expression_entry.get()
     
-   
     try:
         age = int(age_entry.get())
     except ValueError:
         messagebox.showerror("Invalid Input", "Age must be an integer.")
         return
     
+  
     try:
         height = int(height_entry.get())
     except ValueError:
         messagebox.showerror("Invalid Input", "Height must be an integer.")
         return
+    
     
     gender = gender_entry.get().upper()
     if gender not in ['M', 'F']:
@@ -86,9 +91,11 @@ def add_patient():
 
     reason = reason_entry.get()
 
+    
     new_patient = Patient(full_name, severity_score, logical_expression, age, height, gender, reason)
     patients.append(new_patient)
 
+    
     full_name_entry.delete(0, tk.END)
     severity_score_entry.delete(0, tk.END)
     logical_expression_entry.delete(0, tk.END)
@@ -99,20 +106,20 @@ def add_patient():
 
     messagebox.showinfo("Patient Added", f"Patient {full_name} has been added successfully.")
 
+
 def save_patients():
     try:
         with open("patients_data.csv", "w", newline="") as f:
             writer = csv.writer(f)
-           
+            
             writer.writerow(["Full Name", "Severity Score", "Logical Expression", "Age", "Height", "Gender", "Reason"])
-           
+            
             for patient in patients:
                 writer.writerow(patient.to_list())
         
         messagebox.showinfo("Data Saved", "Patient data has been successfully saved to 'patients_data.csv'.")
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while saving data: {e}")
-
 
 def load_patients():
     if os.path.exists("patients_data.csv"):
@@ -121,15 +128,15 @@ def load_patients():
                 reader = csv.reader(f)
                 next(reader)  
                 for row in reader:
-                    if len(row) == 7:  
+                    if len(row) == 7:
                         full_name, severity_score, logical_expression, age, height, gender, reason = row
                         patient = Patient(full_name, float(severity_score), logical_expression, int(age), int(height), gender, reason)
                         patients.append(patient)
             
-            show_patients()  
+            show_patients() 
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred while loading data: {e}")
-            
+
 
 def delete_patient():
     selected_item = treeview.selection()
@@ -141,7 +148,7 @@ def delete_patient():
    
     selected_patient_name = treeview.item(selected_item)["values"][0]
     
-  
+   
     patient_to_delete = None
     for patient in patients:
         if patient.full_name == selected_patient_name:
@@ -152,7 +159,8 @@ def delete_patient():
         
         patients.remove(patient_to_delete)
         treeview.delete(selected_item)
-      
+        
+       
         save_patients()
         
         messagebox.showinfo("Patient Deleted", f"Patient {selected_patient_name} has been deleted successfully.")
@@ -164,7 +172,6 @@ root.title("Hospital Patient Management")
 
 input_frame = tk.Frame(root)
 input_frame.pack(pady=20)
-
 
 tk.Label(input_frame, text="Full Name:").grid(row=0, column=0, pady=5, padx=5)
 full_name_entry = tk.Entry(input_frame)
@@ -232,7 +239,3 @@ treeview.column("Reason", width=150)
 load_patients()
 
 root.mainloop()
-
-
-
-

@@ -209,6 +209,27 @@ save_button.grid(row=0, column=2, padx=10)
 delete_button = tk.Button(button_frame, text="Delete Patient", command=delete_patient)
 delete_button.grid(row=0, column=3, padx=10)
 
+treeview_frame = tk.Frame(root)
+treeview_frame.pack(pady=20)
+
+treeview = ttk.Treeview(treeview_frame, columns=("Full Name", "Severity", "Age", "Height", "Gender", "Reason"), show="headings")
+treeview.pack()
+
+treeview.heading("Full Name", text="Full Name")
+treeview.heading("Severity", text="Severity")
+treeview.heading("Age", text="Age")
+treeview.heading("Height", text="Height")
+treeview.heading("Gender", text="Gender")
+treeview.heading("Reason", text="Reason")
+
+treeview.column("Full Name", width=150)
+treeview.column("Severity", width=80)
+treeview.column("Age", width=60)
+treeview.column("Height", width=100)
+treeview.column("Gender", width=60)
+treeview.column("Reason", width=150)
+
+
 
 
 

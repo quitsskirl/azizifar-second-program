@@ -13,7 +13,7 @@ class Patient:
         self.height = height
         self.gender = gender
         self.reason = reason
-        
+
     def evaluate_logical_expression(self):
      
         self.logical_expression = self.logical_expression.replace('true', 'True').replace('false', 'False')
@@ -28,3 +28,17 @@ class Patient:
 
     def to_list(self):
         return [self.full_name, self.severity_score, self.logical_expression, self.age, self.height, self.gender, self.reason]
+    
+    # Function to show the patients in a table format using Treeview
+def show_patients():
+    # Clear the existing rows in the table
+    for row in treeview.get_children():
+        treeview.delete(row)
+    
+    if not patients:
+        messagebox.showinfo("No Patients", "No patients to show.")
+    else:
+        for patient in patients:
+            # Add each patient as a new row in the Treeview
+            treeview.insert('', 'end', values=(patient.full_name, patient.severity_score, patient.age, patient.height, patient.gender, patient.reason))
+

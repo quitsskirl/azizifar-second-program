@@ -229,6 +229,9 @@ treeview.column("Height", width=100)
 treeview.column("Gender", width=60)
 treeview.column("Reason", width=150)
 
+load_patients()
+
+root.mainloop()
 
 
 

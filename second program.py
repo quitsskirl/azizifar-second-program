@@ -114,3 +114,21 @@ def save_patients():
         messagebox.showerror("Error", f"An error occurred while saving data: {e}")
 
 
+def load_patients():
+    if os.path.exists("patients_data.csv"):
+        try:
+            with open("patients_data.csv", "r") as f:
+                reader = csv.reader(f)
+                next(reader)  
+                for row in reader:
+                    if len(row) == 7:  
+                        full_name, severity_score, logical_expression, age, height, gender, reason = row
+                        patient = Patient(full_name, float(severity_score), logical_expression, int(age), int(height), gender, reason)
+                        patients.append(patient)
+            
+            show_patients()  
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred while loading data: {e}")
+
+
+

@@ -194,6 +194,21 @@ tk.Label(input_frame, text="Reason for Visit:").grid(row=6, column=0, pady=5, pa
 reason_entry = tk.Entry(input_frame)
 reason_entry.grid(row=6, column=1, pady=5, padx=5)
 
+button_frame = tk.Frame(root)
+button_frame.pack(pady=10)
+
+add_patient_button = tk.Button(button_frame, text="Add Patient", command=add_patient)
+add_patient_button.grid(row=0, column=0, padx=10)
+
+show_button = tk.Button(button_frame, text="Show Patients", command=show_patients)
+show_button.grid(row=0, column=1, padx=10)
+
+save_button = tk.Button(button_frame, text="Save Patients", command=save_patients)
+save_button.grid(row=0, column=2, padx=10)
+
+delete_button = tk.Button(button_frame, text="Delete Patient", command=delete_patient)
+delete_button.grid(row=0, column=3, padx=10)
+
 
 
 

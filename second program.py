@@ -99,4 +99,18 @@ def add_patient():
 
     messagebox.showinfo("Patient Added", f"Patient {full_name} has been added successfully.")
 
+def save_patients():
+    try:
+        with open("patients_data.csv", "w", newline="") as f:
+            writer = csv.writer(f)
+           
+            writer.writerow(["Full Name", "Severity Score", "Logical Expression", "Age", "Height", "Gender", "Reason"])
+           
+            for patient in patients:
+                writer.writerow(patient.to_list())
+        
+        messagebox.showinfo("Data Saved", "Patient data has been successfully saved to 'patients_data.csv'.")
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred while saving data: {e}")
+
 

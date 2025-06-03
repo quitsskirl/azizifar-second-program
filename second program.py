@@ -281,6 +281,35 @@ def search_patient_ui():
                 break
     else:
         messagebox.showinfo("Not Found", "Patient not found.")
+def open_login():
+    login_window = tk.Toplevel()
+    login_window.title("Login")
+    login_window.geometry("300x160")
+    login_window.grab_set()  # Makes it modal
+
+    tk.Label(login_window, text="Username:").pack(pady=5)
+    username_entry = tk.Entry(login_window)
+    username_entry.pack(pady=5)
+
+    tk.Label(login_window, text="Password:").pack(pady=5)
+    password_entry = tk.Entry(login_window, show="*")
+    password_entry.pack(pady=5)
+
+    def check_login():
+        username = username_entry.get()
+        password = password_entry.get()
+        if username == VALID_USERNAME and password == VALID_PASSWORD:
+            login_window.destroy()
+            root.deiconify()  # Show main window
+        else:
+            messagebox.showerror("Login Failed", "Invalid username or password")
+
+    tk.Button(login_window, text="Login", command=check_login).pack(pady=10)
+root = tk.Tk()
+root.withdraw()  # Hide until login is successful
+open_login()
+VALID_USERNAME = "admin"
+VALID_PASSWORD = "1234"
 
 root = tk.Tk()
 root.title("Hospital Patient Management")

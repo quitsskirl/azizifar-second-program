@@ -139,6 +139,28 @@ def add_patient():
         return
 
     logical_expression = logical_expression_entry.get()
+    if len(logical_expression) > 60:
+        messagebox.showerror("Invalid Input", "Logical expression must not be more than 60 characters.")
+        return
+
+    if logical_expression.strip().isdigit():
+        messagebox.showerror("Invalid Input", "Logical expression must not be a pure integer.")
+        return
+
+    allowed_keywords = {"True", "False", "and", "or", "not", "(", ")"}
+    tokens = logical_expression.replace('(', ' ( ').replace(')', ' ) ').split()
+    for token in tokens:
+        if not (token in allowed_keywords or token.isalpha()):
+            messagebox.showerror("Invalid Input", f"Invalid token in logical expression: '{token}'")
+            return
+
+    try:
+        evaluated_result = eval(logical_expression.replace('true', 'True').replace('false', 'False'))
+        if not isinstance(evaluated_result, bool):
+            raise ValueError("Logical expression must evaluate to a boolean result.")
+    except Exception as e:
+        messagebox.showerror("Invalid Input", f"Logical expression error: {e}")
+        return
 
     try:
         age = int(age_entry.get())

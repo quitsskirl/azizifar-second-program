@@ -240,6 +240,18 @@ def delete_patient():
         messagebox.showinfo("Patient Deleted", f"Patient {selected_patient_name} has been deleted successfully.")
     else:
         messagebox.showerror("Error", "Patient not found.")
+def delete_all_patients():
+    confirm = messagebox.askyesno("Confirm Delete All", "Are you sure you want to delete ALL patients?")
+    if confirm:
+        patients.clear()
+        treeview.delete(*treeview.get_children())
+        try:
+            with open("patients_data.csv", "w", newline="") as f:
+                writer = csv.writer(f)
+                writer.writerow(["Full Name", "Severity Score", "Logical Expression", "Age", "Height", "Gender", "Reason"])
+            messagebox.showinfo("Deleted", "All patient records have been deleted.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to clear patient file: {e}")
 
 def upload_csv():
     file_path = filedialog.askopenfilename()
@@ -308,9 +320,10 @@ tk.Button(button_frame, text="Add Patient", command=add_patient).grid(row=0, col
 tk.Button(button_frame, text="Show Patients", command=show_patients).grid(row=0, column=1, padx=10)
 tk.Button(button_frame, text="Save Patients", command=save_patients).grid(row=0, column=2, padx=10)
 tk.Button(button_frame, text="Delete Patient", command=delete_patient).grid(row=0, column=3, padx=10)
+tk.Button(button_frame, text="Delete All Patients", command=delete_all_patients).grid(row=1, column=0, columnspan=2, pady=10)
 tk.Button(button_frame, text="Upload CSV", command=upload_csv).grid(row=0, column=4, padx=10)
 tk.Button(button_frame, text="Analyze Performance", command=analyze_performance).grid(row=0, column=5, padx=10)
-tk.Button(button_frame, text="Generate 100 Patients", command=lambda: generate_dummy_patients(100)).grid(row=0, column=6, padx=10)
+tk.Button(button_frame, text="Generate 10 Patients", command=lambda: generate_dummy_patients(10)).grid(row=0, column=6, padx=10)
 
 search_entry = tk.Entry(root)
 search_entry.pack()

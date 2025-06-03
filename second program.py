@@ -109,14 +109,17 @@ def generate_dummy_patients(n):
         patients.append(Patient(name, severity, expr, age, height, gender, reason))
     show_patients()
 
-def show_patients():
+def show_patients(silent=False):
     for row in treeview.get_children():
         treeview.delete(row)
+
     if not patients:
-        messagebox.showinfo("No Patients", "No patients to show.")
+        if not silent:
+            messagebox.showinfo("No Patients", "No patients to show.")
     else:
         for patient in patients:
             treeview.insert('', 'end', values=(patient.full_name, patient.severity_score, patient.age, patient.height, patient.gender, patient.reason))
+
 
 def add_patient():
     if not full_name_entry.get() or not severity_score_entry.get() or not logical_expression_entry.get() or not age_entry.get() or not height_entry.get() or not gender_entry.get() or not reason_entry.get():
@@ -216,7 +219,7 @@ def load_patients():
                         full_name, severity_score, logical_expression, age, height, gender, reason = row
                         patient = Patient(full_name, float(severity_score), logical_expression, int(age), int(height), gender, reason)
                         patients.append(patient)
-            show_patients()
+            show_patients(silent=True)
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred while loading data: {e}")
 
